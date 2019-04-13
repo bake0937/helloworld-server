@@ -15,8 +15,8 @@ services:
     stdin_open: true
     working_dir: "/go/src" 
     volumes:
-      - ./src/main.go:/go/src/main.go
       - ./src/test:/go/src/test
+      - ./src/main.go:/go/src/main.go
       - ./src/server:/go/src/server
       - ./src/model:/go/src/model
       - ../protoc-gen-docker/src/go/:/go/src/proton/

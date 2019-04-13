@@ -11,7 +11,6 @@ RUN apk update && \
 RUN go get -u github.com/fullstorydev/grpcurl && \
     go install github.com/fullstorydev/grpcurl/cmd/grpcurl
     
-
 RUN rm -rf /go/pkg
 
 #install go pakage
