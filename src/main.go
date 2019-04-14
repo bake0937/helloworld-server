@@ -62,12 +62,12 @@ func main() {
 		// 	Usage:       "Running without TLS",
 		// 	Destination: &insecureFlag,
 		// },
-		// cli.StringFlag{
-		// 	Name:        "binding, b",
-		// 	Usage:       "Server binding address",
-		// 	Value:       "127.0.0.1:1443",
-		// 	Destination: &binding,
-		// },
+		cli.StringFlag{
+			Name:        "binding, b",
+			Usage:       "Server binding address",
+			Value:       "127.0.0.1:50051",
+			Destination: &binding,
+		},
 		// cli.StringFlag{
 		// 	Name:        "health",
 		// 	Usage:       "Health check binding",
