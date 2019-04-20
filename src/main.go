@@ -65,7 +65,7 @@ func main() {
 		cli.StringFlag{
 			Name:        "binding, b",
 			Usage:       "Server binding address",
-			Value:       "127.0.0.1:50051",
+			Value:       "127.0.0.1:9999",
 			Destination: &binding,
 		},
 		// cli.StringFlag{

@@ -4,7 +4,7 @@ services:
     container_name: proxy
     build: ./proxy
     ports:
-      - "8081:8080"
+      - "8888:8888"
     links:
       - "api"
 
@@ -14,6 +14,8 @@ services:
     tty: true
     stdin_open: true
     working_dir: "/go/src" 
+    ports:
+      - "9999:9999"
     volumes:
       - ./src/test:/go/src/test
       - ./src/main.go:/go/src/main.go
