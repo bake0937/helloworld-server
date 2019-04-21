@@ -15,3 +15,9 @@ func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	log.Printf("Received: %v", in.Name)
 	return &pb.HelloResponse{Message: "Hello " + in.Name}, nil
 }
+
+func NewServer() (server *Server) {
+	server = &Server{}
+
+	return server
+}
