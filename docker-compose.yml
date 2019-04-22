@@ -22,3 +22,16 @@ services:
       - ./src/server:/go/src/server
       - ./src/model:/go/src/model
       - ../protoc-gen-docker/src/go/:/go/src/proton/
+
+  mysql:
+    build: ./mysql
+    container_name: mysql
+    env_file: ./mysql/.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/schema:/docker-entrypoint-initdb.d/
+      - ./mysql/database:/var/lib/mysql/
+      
+volumes:
+    database:
