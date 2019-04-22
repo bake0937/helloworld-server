@@ -1,0 +1,24 @@
+version: '3'
+services:
+  proxy:
+    container_name: proxy
+    build: ./proxy
+    ports:
+      - "8888:8888"
+    links:
+      - "api"
+
+  api:
+    build: ./grpcweb
+    container_name: server
+    tty: true
+    stdin_open: true
+    working_dir: "/go/src" 
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./src/test:/go/src/test
+      - ./src/main.go:/go/src/main.go
+      - ./src/server:/go/src/server
+      - ./src/model:/go/src/model
+      - ../protoc-gen-docker/src/go/:/go/src/proton/
