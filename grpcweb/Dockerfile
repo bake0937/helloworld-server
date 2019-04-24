@@ -22,6 +22,7 @@ RUN go get -u github.com/urfave/cli
 RUN go get -u google.golang.org/grpc/credentials
 RUN go get -u google.golang.org/grpc/reflection
 RUN go get -u github.com/go-sql-driver/mysql
+RUN go get -u golang.org/x/tools/cmd/goimports
 RUN go get -u github.com/xo/xo
 RUN go get -u github.com/jmoiron/sqlx
 

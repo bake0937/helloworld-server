@@ -11,7 +11,6 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
-	"time"
 )
 
 // XODB is the common interface for database operations that can be used with
@@ -25,7 +24,7 @@ type XODB interface {
 }
 
 // XOLog provides the log func used by generated queries.
-var XOLog = func(string, ...interface{}) { }
+var XOLog = func(string, ...interface{}) {}
 
 // ScannerValuer is the common interface for types that implement both the
 // database/sql.Scanner and sql/driver.Valuer interfaces.
@@ -52,7 +51,7 @@ func (ss *StringSlice) Scan(src interface{}) error {
 	str = strings.Replace(str, `\\`, `\`, -1)
 
 	// remove braces
-	str = str[1:len(str)-1]
+	str = str[1 : len(str)-1]
 
 	// bail if only one
 	if len(str) == 0 {
@@ -84,4 +83,3 @@ func (ss StringSlice) Value() (driver.Value, error) {
 
 // Slice is a slice of ScannerValuers.
 type Slice []ScannerValuer
-
