@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net"
 	"net/http"
 	"os"
 
+	"model"
 	"proton"
-
 	"server"
+	"util/database"
 
 	"github.com/urfave/cli"
 	"google.golang.org/grpc"
@@ -41,7 +43,6 @@ func main() {
 		binding string
 		// fluentdAddr   string
 		// fluentdTag    string
-		// configPath    string
 		// insecureFlag  bool
 		healthBinding string
 	)
@@ -86,12 +87,6 @@ func main() {
 		// 	Value:       fmt.Sprintf("log.access.%s", Name),
 		// 	Destination: &fluentdTag,
 		// },
-		// cli.StringFlag{
-		// 	Name:        "config, c",
-		// 	Usage:       "Path to configuration file",
-		// 	Value:       "config.yml",
-		// 	Destination: &configPath,
-		// },
 	}
 
 	app.Action = func(c *cli.Context) error {
@@ -106,23 +101,18 @@ func main() {
 		// 	defer fluentLogger.Close()
 		// }
 
-		// cfg, err := config.NewConfig(configPath)
-		// if err != nil {
-		// 	logger.Fatal(err.Error())
-		// }
-
-		// db, err := md.NewDB(
-		// 	cfg.Db.User,
-		// 	cfg.Db.Password,
-		// 	cfg.Db.Host,
-		// 	cfg.Db.Port,
-		// 	cfg.Db.DBName,
-		// )
-		// if err != nil {
-		// 	logger.Fatal(err.Error())
-		// }
-		// defer db.Close()
-		// m := model.NewModel(db)
+		db, err := database.NewDB(
+			os.Getenv("MYSQL_USER"),
+			os.Getenv("MYSQL_PASSWORD"),
+			os.Getenv("MYSQL_HOST"),
+			os.Getenv("MYSQL_PORT"),
+			os.Getenv("MYSQL_DATABASE"),
+		)
+		if err != nil {
+			log.Fatalf(err.Error())
+		}
+		defer db.Close()
+		m := model.NewModel(db)
 
 		opts := []grpc.ServerOption{}
 
@@ -145,7 +135,7 @@ func main() {
 
 		proton.RegisterGreeterServer(
 			svr,
-			server.NewServer(),
+			server.NewServer(m),
 		)
 		reflection.Register(svr)
 

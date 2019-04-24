@@ -14,19 +14,23 @@ services:
     tty: true
     stdin_open: true
     working_dir: "/go/src" 
+    env_file: 
+      - ./mysql/.env
     ports:
       - "9999:9999"
     volumes:
       - ./src/test:/go/src/test
       - ./src/main.go:/go/src/main.go
       - ./src/server:/go/src/server
+      - ./src/util:/go/src/util
       - ./src/model:/go/src/model
       - ../protoc-gen-docker/src/go/:/go/src/proton/
 
   mysql:
     build: ./mysql
     container_name: mysql
-    env_file: ./mysql/.env
+    env_file: 
+      - ./mysql/.env
     ports:
       - "3306:3306"
     volumes:
