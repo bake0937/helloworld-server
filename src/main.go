@@ -137,6 +137,11 @@ func main() {
 			svr,
 			server.NewServer(m),
 		)
+
+		proton.RegisterAddressServiceServer(
+			svr,
+			server.NewServer(m),
+		)
 		reflection.Register(svr)
 
 		go func() {

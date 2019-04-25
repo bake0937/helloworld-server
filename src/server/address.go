@@ -28,7 +28,11 @@ func (s *Server) ListAddress(ctx context.Context, req *pb.ListAddressRequest) (r
 	// 		Email:           ca.Email},
 	// 	)
 	// }
+	var addresses []*pb.Address
 
-	//res = &proton.ListClinotAddressResponse{Name: company.Name, ClinotAddresses: addresses}
-	return nil, nil
+	addresses = append(addresses, &pb.Address{Id: 1, Email: "test@test.co.jp"})
+	// res = &proton.ListClinotAddressResponse{Name: company.Name, ClinotAddresses: addresses}
+
+	res = &pb.ListAddressResponse{Address: addresses}
+	return res, nil
 }
