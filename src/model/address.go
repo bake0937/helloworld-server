@@ -16,3 +16,21 @@ func (model *Model) AllFindAddress() ([]Address, error) {
 
 	return res, err
 }
+
+func (model *Model) CreateAddress(address *Address) error {
+	model.Begin()
+
+	sql, args, err := sq.Insert("address").Columns("email").Values(address.Email).ToSql()
+	_, err2 := model.db.Exec(sql, args...)
+
+	if err != nil {
+		return err
+	}
+	if err2 != nil {
+		return err2
+	}
+
+	model.Commit()
+
+	return nil
+}
