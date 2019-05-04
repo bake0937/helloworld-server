@@ -5,14 +5,12 @@ package model
 
 import (
 	"errors"
-	"time"
 )
 
 // Address represents a row from '"sample"."address"'.
 type Address struct {
-	ID        uint      `json:"id"`         // id
-	Email     string    `json:"email"`      // email
-	CreatedAt time.Time `json:"created_at"` // created_at
+	ID    uint   `json:"id"`    // id
+	Email string `json:"email"` // email
 
 	// xo fields
 	_exists, _deleted bool
@@ -39,14 +37,14 @@ func (a *Address) Insert(db XODB) error {
 
 	// sql insert query, primary key provided by autoincrement
 	const sqlstr = `INSERT INTO "sample"."address" (` +
-		`"email", "created_at"` +
+		`"email"` +
 		`) VALUES (` +
-		`?, ?` +
+		`?` +
 		`)`
 
 	// run query
-	XOLog(sqlstr, a.Email, a.CreatedAt)
-	res, err := db.Exec(sqlstr, a.Email, a.CreatedAt)
+	XOLog(sqlstr, a.Email)
+	res, err := db.Exec(sqlstr, a.Email)
 	if err != nil {
 		return err
 	}
@@ -80,12 +78,12 @@ func (a *Address) Update(db XODB) error {
 
 	// sql query
 	const sqlstr = `UPDATE "sample"."address" SET ` +
-		`"email" = ?, "created_at" = ?` +
+		`"email" = ?` +
 		` WHERE "id" = ?`
 
 	// run query
-	XOLog(sqlstr, a.Email, a.CreatedAt, a.ID)
-	_, err = db.Exec(sqlstr, a.Email, a.CreatedAt, a.ID)
+	XOLog(sqlstr, a.Email, a.ID)
+	_, err = db.Exec(sqlstr, a.Email, a.ID)
 	return err
 }
 
@@ -136,7 +134,7 @@ func AddressByID(db XODB, id uint) (*Address, error) {
 
 	// sql query
 	const sqlstr = `SELECT ` +
-		`"id", "email", "created_at" ` +
+		`"id", "email" ` +
 		`FROM "sample"."address" ` +
 		`WHERE "id" = ?`
 
@@ -146,7 +144,7 @@ func AddressByID(db XODB, id uint) (*Address, error) {
 		_exists: true,
 	}
 
-	err = db.QueryRow(sqlstr, id).Scan(&a.ID, &a.Email, &a.CreatedAt)
+	err = db.QueryRow(sqlstr, id).Scan(&a.ID, &a.Email)
 	if err != nil {
 		return nil, err
 	}
