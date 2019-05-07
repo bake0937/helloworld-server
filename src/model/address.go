@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	sq "github.com/Masterminds/squirrel"
 )
 
@@ -18,6 +19,8 @@ func (model *Model) AllFindAddress() ([]Address, error) {
 }
 
 func (model *Model) CreateAddress(address *Address) error {
+	fmt.Printf("CreateAddress")
+
 	model.Begin()
 
 	sql, args, err := sq.Insert("address").Columns("email").Values(address.Email).ToSql()
